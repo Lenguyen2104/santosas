@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../../layout/header') %>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+        </ul>
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!-- /.navbar -->
+    <%- include('../../layout/sidebar') %>
+    <div class="content-wrapper">
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-12">
+                        <% if(typeof message !=='undefined' ){ %>
+                            <div class="alert alert-success">
+                                <%= message %>
+                            </div>
+                        <% } %>
+                        <div class="card card-primary mt-3">
+                            <div class="card-header">
+                                <h3 class="card-title">Thêm Member</h3>
+                            </div>
+                            <div class="card-body">
+                                <form action="/admin/membersaddnew" method="POST" enctype="multipart/form-data">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="menu">Phone</label>
+                                                    <input type="text" name="phone" class="form-control"  >
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="menu">Username</label>
+                                                    <input type="text" name="username" class="form-control"  >
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="menu">Password</label>
+                                                    <input type="text" name="password" class="form-control"  >
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="menu">Avatar</label>
+                                                    <input type="file" name="avatar" class="form-control"  >
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="menu">Level</label>
+                                                    <input type="text" name="level" class="form-control"  >
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="menu">Roles</label>
+                                                    <select name="roles" class="form-control" >
+                                                        <option value="admin">admin</option>
+                                                        <option value="member">member</option>
+                                                        <option value="mod">mod</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="menu">Banned</label>
+                                                    <select name="banned" class="form-control" >
+                                                        <option value="0">No</option>
+                                                        <option value="1">Banned</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">Thêm Member</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <div class="float-right d-none d-sm-block">
+            <b>Version</b> 1.0
+        </div>
+        <strong>Copyright &copy; 2023 <a href="/">Admin</a>.</strong> All rights reserved.
+    </footer>
+</div>
+<%- include('../../layout/footer') %>
+</body>
+</html>

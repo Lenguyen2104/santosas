@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"unique":true,"key":{"phien_id":{"$numberInt":"1"}},"name":"phien_id_1","background":true}],"uuid":"00a477d933e04da29993b9aa55433bdc","collectionName":"onemins","type":"collection"}

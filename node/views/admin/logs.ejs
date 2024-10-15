@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../layout/header') %>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+        </ul>
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!-- /.navbar -->
+    <%- include('../layout/sidebar') %>
+    <div class="content-wrapper">
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-12">
+                        <!-- jquery validation -->
+                        <div class="card card-primary mt-3">
+                            <div class="card-header">
+                                <h3 class="card-title">Logs</h3>
+                            </div>
+                            <div class="card-body">
+                              <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Username</th>
+                                    <th>FromMoney</th>
+                                    <th>Money</th>
+                                    <th>ToMoney</th>
+                                    <th>Status</th>
+                                    <th>Type</th>
+                                    <th>Thời gian</th>
+                                    <th>Hành Động</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                  <% 
+                                    if(logs.length > 0){
+                                      for (let i = 0; i < logs.length; i++) {
+                                        %>
+                                        <tr>
+                                          <th><%=i+1 %></th>  
+                                          <th><%=logs[i]['user_id'] && logs[i]['user_id']['username'] ? logs[i]['user_id']['username'] : 'Unknown User' %></th>
+                                          <th><%=logs[i]['frommoney'] %></th>
+                                          <th><%=logs[i]['money'] %></th>
+                                          <th><%=logs[i]['tomoney'] %></th>
+                                          <th><%=logs[i]['status'] %></th>
+                                          <th><%=logs[i]['type'] %></th>
+                                          <th><% function convertdate(rawDate) {
+                                                const options = {
+                                                day: '2-digit',
+                                                month: 'short',
+                                                year: 'numeric',
+                                                hour: '2-digit',
+                                                minute: '2-digit',
+                                                second: '2-digit',
+                                                timeZoneName: 'short'
+                                                };
+                                                const formattedDate = new Date(rawDate).toLocaleDateString('en-GB', options);
+                                                return formattedDate;
+                                            }%>
+                                            <%=convertdate(logs[i]['createdAt']) %>
+                                          <th>
+                                            <a href="/admin/logs/delete/<%= logs[i]['_id'] %>" class="btn btn-danger btn-sm cursor-pointer" data-id="<%= logs[i]['_id'] %>">
+                                              <i class="fa fa-trash"></i>
+                                            </a>  
+                                          </th>  
+                                        </tr>
+                                      <% 
+                                      }
+                                    }else {
+                                      %>
+                                        <tr>
+                                          <td>No logs</td>  
+                                        </tr>
+                                      <%
+                                    } 
+                                  %>
+                                </tbody>
+                              </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <div class="float-right d-none d-sm-block">
+            <b>Version</b> 1.0
+        </div>
+        <strong>Copyright &copy; 2023 <a href="/">Admin</a>.</strong> All rights reserved.
+    </footer>
+</div>
+<%- include('../layout/footer') %>
+<script>
+$(document).on('click','.copy',function(){
+  var group_id = $(this).attr('data-id');
+  var url = window.location.host+'/room/'+group_id;
+  var temp = $("<input>");
+  $("body").append(temp);
+  temp.val(url).select();
+  document.execCommand("copy");
+  temp.remove();
+});
+
+function convertdate(dateString){
+    const dateObject = new Date(dateString);
+    const options = {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: false, 
+    };
+    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(dateObject);
+    return formattedDate;
+}
+</script>
+</body>
+</html>

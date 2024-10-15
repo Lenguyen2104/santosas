@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../layout/header') %>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+        </ul>
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!-- /.navbar -->
+    <%- include('../layout/sidebar') %>
+    <div class="content-wrapper">
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-12">
+                        <!-- jquery validation -->
+                        <div class="card card-primary mt-3">
+                            <div class="card-header">
+                                <h3 class="card-title">Danh Sách Member</h3>
+                            </div>
+                            <div class="card-body">
+                              <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Phone</th>
+                                    <th>Username</th>
+                                    <th>Pass Show</th>
+                                    <th>Vip</th>
+                                    <th>Balance</th>
+                                    <th>Pass Rút tiền</th>
+                                    <th>Banned</th>
+                                    <th>Mã giới thiệu</th>
+                                    <th>Thời gian</th>
+                                    <th>Phiên đăng nhập</th>
+                                    <th>Hành Động</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                  <% 
+                                    if(users.length > 0){
+                                      for (let i = 0; i < users.length; i++) {
+                                        %>
+                                          <th><%= i+1 %></th>
+                                          <th><%= users[i]['phone'] %></th>  
+                                          <th><%= users[i]['username'] %></th>
+                                          <th class="text-danger"><%= users[i]['password_show'] %></th>
+                                          <th><%= users[i]['vip'] %></th>
+                                          <th class="text-success"><%= users[i]['balance'] %></th>
+                                          <th><%= users[i]['password_withdraw'] %></th>
+                                          <th><% if (users[i]['banned']) { %>
+                                            <span class="badge badge-danger">Khóa</span>
+                                            <% } else { %>
+                                            <span class="badge badge-danger">No</span>
+                                            <% } %>
+                                          </th>
+                                          <th class="text-warning"><%= users[i]['coderef'] %></th>
+                                          <th data-date="<%= users[i]['createdAt'] %>">
+                                        </th>
+                <th >
+                  <table class="inner-table">
+                    <tbody>
+                        <tr>
+                          <td>ID:</td>
+                          <td><%= users[i]['_id'] %></td>
+                          <td>Phone:</td>
+                          <td><%= users[i]['phone'] %></td>
+                        </tr> 
+                        <tr> 
+                          <td>Ngân hàng:</td>
+                          <td><%= users[i]['bank_id'] %></td>
+                          <td>Trạng thái cược:</td>
+                          <td><% if (users[i]['enable_bet']) { %>Mở<% } else { %>Đóng<% } %></td>
+                        </tr> 
+                        <tr>
+                          <td>Số tài khoản:</td>
+                          <td><%= users[i]['bank_number'] %></td>
+                          <td>CC Mặt trước</td>
+                          <td><img src="<%= users[i]['cmndmt'] %>" width="100px" height="100px"></td>
+                        </tr> 
+                        <tr>
+                          <td>Chủ tài khoản:</td>
+                          <td><%= users[i]['bank_user'] %></td>
+                          <td>CC Mặt sau</td>
+                          <td><img src="<%= users[i]['cmndms'] %>" width="100px" height="100px"></td>
+                        </tr>
+                        <% if(Array.isArray(users[i]['logs']) && users[i]['logs'].length > 0){
+                          for (let l = 0; l < users[i]['logs'].length; l++) { %>
+                        <tr>
+                            <td>
+                              <%= users[i]['logs'][l]['os']['name'] %> <%= users[i]['logs'][l]['os']['version'] %> | <%= users[i]['logs'][l]['agent']['name']%> <%= users[i]['logs'][l]['agent']['version']%> | <span class="text-danger"><%= users[i]['logs'][l]['ipaddress'] %></span>
+                              <br>
+                              <span class="text-success" data-date="<%= users[i]['logs'][l]['createdAt'] %>"></span>
+                            </td>
+                        </tr>
+                        <% } 
+                        } %>
+                    </tbody>
+                  </table>
+                </th>
+                                          <th>
+                                            <a href="/admin/members/<%= users[i]['_id'] %>" class="btn btn-primary btn-sm cursor-pointer mb-2">
+                                              <i class="fa fa-edit"></i>Chỉnh sửa
+                                            </a>  
+                                            <a href="/admin/members/money/<%= users[i]['_id'] %>" class="btn btn-warning btn-sm cursor-pointer mb-2">
+                                              <i class="fa fa-money-bill"></i>Nạp tiền
+                                            </a>  
+                                            <a href="/admin/members/delete/<%= users[i]['_id'] %>" class="btn btn-danger btn-sm cursor-pointer mb-2" data-id="<%= users[i]['_id'] %>">
+                                              <i class="fa fa-trash"></i>Xóa
+                                            </a>  
+                                          </th>  
+                                        </tr>
+                                      <% 
+                                      }
+                                    }else {
+                                      %>
+                                        <tr>
+                                          <td>No Groups</td>  
+                                        </tr>
+                                      <%
+                                    } 
+                                  %>
+                                </tbody>
+                              </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <div class="float-right d-none d-sm-block">
+            <b>Version</b> 1.0
+        </div>
+        <strong>Copyright &copy; 2023 <a href="/">Admin</a>.</strong> All rights reserved.
+    </footer>
+</div>
+<%- include('../layout/footer') %>
+<script>
+function convertdate(dateString){
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+}
+document.querySelectorAll('th[data-date]').forEach(th => {
+    const dateString = th.getAttribute('data-date');
+    th.textContent = convertdate(dateString);
+});
+document.querySelectorAll('span[data-date]').forEach(td => {
+    const dateString = td.getAttribute('data-date');
+    td.textContent = 'Đăng nhập lần cuối: '+convertdate(dateString);
+});
+</script>
+<script>
+$(function() {
+    $("#example2").DataTable({
+        "responsive": true,
+        "autoWidth": true,
+    });
+});
+</script>
+</body>
+</html>
